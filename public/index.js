@@ -45,15 +45,22 @@ function getDriverPrice(cars, rentals){
          }
         }
 
-        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + (priceFromDays+priceFromDistance) + ' </p>');
-        var commission = (priceFromDays+priceFromDistance)*0.3;
+        var totalPrice = (priceFromDays+priceFromDistance);
+
+        var commission = totalPrice*0.3;
         var assist = days;
         var insurance = commission*0.5;
         var drivy = commission-assist-insurance;
-        document.write('<p> Insurance : ' + insurance+ ', assistance : ' +assist + ', Drivy : ' +drivy + '</p>');
+        
+        if(rentals[index].options.deductibleReduction){
+          var addDeductibleReduction = days*4;
+          totalPrice+=addDeductibleReduction;
+          drivy+=addDeductibleReduction;
+        }
 
-        var addDeductibleReduction = days*4;
-        //document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + (priceFromDays+priceFromDistance) + ' </p>');
+        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + totalPrice + ' </p>');
+        document.write('<p> Insurance : ' + insurance+ ', assistance : ' +assist + ', Drivy : ' +drivy + '</p>');
+        
       }
     }
   }
