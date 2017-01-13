@@ -1,18 +1,55 @@
 'use strict';
 
+function getDriverPrice(cars, rentals){
+
+  var priceFromDays = 0;
+  var priceFromDistance = 0;
+  var days = 0;
+  var hours = 0;
+  var index = 0;
+  var i = 0;
+
+  for (index = 0; index < rentals.length; index++) {
+    rentals[index].carid;
+    for (i = 0; i < cars.length; i++) {
+      if (cars[i].idc == rentals[index].carId)
+      {
+        priceFromDistance = 0;
+        priceFromDistance += rentals[index].distance * cars[i].pricePerKm;
+        priceFromDays = 0;
+
+        var dateReturn = new Date(rentals[index].returnDate);
+        var datePick = new Date(rentals[index].pickupDate);
+
+        days = Math.abs(dateReturn - datePick) / (60*60*1000*24);
+
+        if(days == 0){
+          days = 1;
+        }
+
+        //document.write('<p> days number : ' + days);
+
+        priceFromDays += days*cars[i].pricePerDay;
+
+        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + (priceFromDays+priceFromDistance) + '</p>');
+      }
+    }
+  }
+}
+
 //list of cars
 //useful for ALL exercises
 var cars = [{
-  'id': 'p306',
+  'idc': 'p306',
   'vehicule': 'peugeot 306',
   'pricePerDay': 20,
   'pricePerKm': 0.10
 }, {
-  'id': 'rr-sport',
+  'idc': 'rr-sport',
   'pricePerDay': 60,
   'pricePerKm': 0.30
 }, {
-  'id': 'p-boxster',
+  'idc': 'p-boxster',
   'pricePerDay': 100,
   'pricePerKm': 0.45
 }];
@@ -164,6 +201,8 @@ var rentalModifications = [{
   'rentalId': '3-sa-92',
   'pickupDate': '2015-12-05'
 }];
+
+getDriverPrice(cars, rentals);
 
 console.log(cars);
 console.log(rentals);
