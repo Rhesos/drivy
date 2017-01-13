@@ -32,17 +32,28 @@ function getDriverPrice(cars, rentals){
 
         priceFromDays += days*cars[i].pricePerDay;
 
-        if(days < 4){
-          priceFromDays*=0.9;
-        }
-        else if(days <10){
-          priceFromDays*=0.7;
-        }
-        else{
-          priceFromDistance*=0.5;
+        if(days > 1)
+        {
+         if(days < 5){
+           priceFromDays*=0.9;
+         }
+         else if(days <11){
+           priceFromDays*=0.7;
+         }
+         else{
+           priceFromDays*=0.5;
+         }
         }
 
-        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + (priceFromDays+priceFromDistance) + '</p>');
+        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + (priceFromDays+priceFromDistance) + ' </p>');
+        var commission = (priceFromDays+priceFromDistance)*0.3;
+        var assist = days;
+        var insurance = commission*0.5;
+        var drivy = commission-assist-insurance;
+        document.write('<p> Insurance : ' + insurance+ ', assistance : ' +assist + ', Drivy : ' +drivy + '</p>');
+
+        var addDeductibleReduction = days*4;
+        //document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + (priceFromDays+priceFromDistance) + ' </p>');
       }
     }
   }
