@@ -8,6 +8,7 @@ function getDriverPrice(cars, rentals){
   var hours = 0;
   var index = 0;
   var i = 0;
+  var j = 0;
 
   for (index = 0; index < rentals.length; index++) {
     rentals[index].carid;
@@ -23,12 +24,6 @@ function getDriverPrice(cars, rentals){
 
         days = Math.abs(dateReturn - datePick) / (60*60*1000*24);
         days++;
-
-        /*if(days == 0){
-          days = 1;
-        }*/
-
-        //document.write('<p> days number : ' + days);
 
         priceFromDays += days*cars[i].pricePerDay;
 
@@ -48,6 +43,7 @@ function getDriverPrice(cars, rentals){
         var totalPrice = (priceFromDays+priceFromDistance);
 
         var commission = totalPrice*0.3;
+        var brotherMoney = totalPrice-commission;
         var assist = days;
         var insurance = commission*0.5;
         var drivy = commission-assist-insurance;
@@ -58,9 +54,30 @@ function getDriverPrice(cars, rentals){
           drivy+=addDeductibleReduction;
         }
 
-        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + totalPrice + ' </p>');
-        document.write('<p> Insurance : ' + insurance+ ', assistance : ' +assist + ', Drivy : ' +drivy + '</p>');
-        
+        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + totalPrice + ' euros </p>');
+        document.write('<p> Insurance : ' + insurance+ ', assistance : ' +assist + ', Drivy : ' +drivy + ', brother earns ' + brotherMoney +'</p>');
+
+        for (j = 0; j < actors.length; j++) {
+
+          if(actors[j].rentalId = rentals[index].id){
+            if(actors[j].who == "owner"){
+            actors[j].amount+=brotherMoney;
+          }
+          else if(actors[j].who=="insurance"){
+            actors[j].amount+=insurance;
+          }
+          else if(actors[j].who=="drivy"){
+            actors[j].amount+=drivy;
+          }
+          else if(actors[j].who=="assistance"){
+            actors[j].amount+=assist;
+          }
+          else if (actors[j].who==cars[i].idc){
+            actors[j].amount+=totalPrice;
+          }
+          }
+        }
+
       }
     }
   }
