@@ -22,14 +22,25 @@ function getDriverPrice(cars, rentals){
         var datePick = new Date(rentals[index].pickupDate);
 
         days = Math.abs(dateReturn - datePick) / (60*60*1000*24);
+        days++;
 
-        if(days == 0){
+        /*if(days == 0){
           days = 1;
-        }
+        }*/
 
         //document.write('<p> days number : ' + days);
 
         priceFromDays += days*cars[i].pricePerDay;
+
+        if(days < 4){
+          priceFromDays*=0.9;
+        }
+        else if(days <10){
+          priceFromDays*=0.7;
+        }
+        else{
+          priceFromDistance*=0.5;
+        }
 
         document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + (priceFromDays+priceFromDistance) + '</p>');
       }
