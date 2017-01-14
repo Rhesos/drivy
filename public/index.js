@@ -9,6 +9,7 @@ function getDriverPrice(cars, rentals){
   var index = 0;
   var i = 0;
   var j = 0;
+  var k = 0;
 
   for (index = 0; index < rentals.length; index++) {
     rentals[index].carid;
@@ -38,49 +39,50 @@ function getDriverPrice(cars, rentals){
          else{
            priceFromDays*=0.5;
          }
-        }
+       }
 
-        var totalPrice = (priceFromDays+priceFromDistance);
+       var totalPrice = (priceFromDays+priceFromDistance);
 
-        var commission = totalPrice*0.3;
-        var brotherMoney = totalPrice-commission;
-        var assist = days;
-        var insurance = commission*0.5;
-        var drivy = commission-assist-insurance;
-        
-        if(rentals[index].options.deductibleReduction){
-          var addDeductibleReduction = days*4;
-          totalPrice+=addDeductibleReduction;
-          drivy+=addDeductibleReduction;
-        }
+       var commission = totalPrice*0.3;
+       var brotherMoney = totalPrice-commission;
+       var assist = days;
+       var insurance = commission*0.5;
+       var drivy = commission-assist-insurance;
 
-        document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + totalPrice + ' euros </p>');
-        document.write('<p> Insurance : ' + insurance+ ', assistance : ' +assist + ', Drivy : ' +drivy + ', brother earns ' + brotherMoney +'</p>');
-
-        for (j = 0; j < actors.length; j++) {
-
-          if(actors[j].rentalId = rentals[index].id){
-            if(actors[j].who == "owner"){
-            actors[j].amount+=brotherMoney;
-          }
-          else if(actors[j].who=="insurance"){
-            actors[j].amount+=insurance;
-          }
-          else if(actors[j].who=="drivy"){
-            actors[j].amount+=drivy;
-          }
-          else if(actors[j].who=="assistance"){
-            actors[j].amount+=assist;
-          }
-          else if (actors[j].who==cars[i].idc){
-            actors[j].amount+=totalPrice;
-          }
-          }
-        }
-
+       if(rentals[index].options.deductibleReduction){
+        var addDeductibleReduction = days*4;
+        totalPrice+=addDeductibleReduction;
+        drivy+=addDeductibleReduction;
       }
+
+      document.write('<p>' + rentals[index].driver.firstName + ' ' + rentals[index].driver.lastName + ' must pay ' + totalPrice + ' euros </p>');
+      document.write('<p> Insurance : ' + insurance+ ', assistance : ' +assist + ', Drivy : ' +drivy + ', brother earns ' + brotherMoney +'</p>');
+
+      for (j = 0; j < actors.length; j++) {
+        if(actors[j].rentalId == rentals[index].id){
+          for (k = 0; k < actors[j].payment.length; k++){
+            if(actors[j].payment[k].who == "owner"){
+              actors[j].payment[k].amount+=brotherMoney;
+            }
+            else if(actors[j].payment[k].who=="insurance"){
+              actors[j].payment[k].amount+=insurance;
+            }
+            else if(actors[j].payment[k].who=="drivy"){
+              actors[j].payment[k].amount+=drivy;
+            }
+            else if(actors[j].payment[k].who=="assistance"){
+              actors[j].payment[k].amount+=assist;
+            }
+            else {
+              actors[j].payment[k].amount+=totalPrice;
+            }
+          }
+        }
+      }
+
     }
   }
+}
 }
 
 //list of cars
